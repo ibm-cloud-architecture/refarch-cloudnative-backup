@@ -8,10 +8,10 @@ This project shows how to back up some components of the BlueCompute application
 
 Follow these instructions to add a scheduled backup to BlueCompute database
 
-````TBD````
+````TBD, but when it's done, it will be awesome````
 
 ## Restore
 
 Follow these instrutions to restore the backup
 
-````TBD````
+````TBD, but when it's done, it will be awesome````
