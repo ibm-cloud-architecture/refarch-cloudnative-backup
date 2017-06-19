@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project shows how to back up some components of the BlueCompute application
+This project shows how to back up some components of the BlueCompute application.
 
 ## Back up
 
