@@ -4,6 +4,11 @@
 
 This project shows how to back up some components of the BlueCompute application.
 
+## Deploy BlueCompute application
+
+```
+./install_bluecompute_ce.sh eduardo CASE-Production <api-key>
+```
 
 ## Back up
 
