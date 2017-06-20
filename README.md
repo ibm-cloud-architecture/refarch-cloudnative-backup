@@ -126,9 +126,8 @@ kubectl exec -it $MYSQL_ID -- /bin/bash
 ```
 /etc/init.d/mysql stop
 ```
-Exit the container by typing `exit`
 
-* Connect to the Backup container
+* In another shell, connect to the Backup container
 ```
 kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
 ```
@@ -152,7 +151,7 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 
 Exit the container by typing `exit`
 
-* Let's refresh the database data. Log on to the MySQL container:
+* Let's refresh the database data. Back in the shell logged to the MySQL container:
 
 ```
 kubectl exec -it $MYSQL_ID -- /bin/bash
