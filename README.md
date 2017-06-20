@@ -116,21 +116,6 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 
 Follow these instrutions to restore the backup. This step assumes you ran the "Simulate a failure" section.
 
-* Log on to the MySQL container:
-
-```
-kubectl exec -it $MYSQL_ID -- /bin/bash
-```
-
-* Stop the MySQL database:
-```
-mysqladmin -u root -p shutdown
-```
-
-type `admin123` as the password
-
-* Exit the MySQL container by typing `exit`
-
 * Connect to the Backup container
 ```
 kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
