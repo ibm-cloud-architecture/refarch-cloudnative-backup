@@ -137,6 +137,49 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 [2017-06-20 18:15:21,210] [restore : 40] [INFO] Configuration is completed.
 [2017-06-20 18:15:27,839] [restore : 70] [INFO] Restoring the backup that is named 'patrocinio-inventory-mysql' is completed. Local and Remote metadata are synchronized, no sync needed.
 ```
+* Let's validate that the database now has 12 items. Log on to the MySQL container:
+
+```
+kubectl exec -it $MYSQL_ID -- /bin/bash
+```
+
+You should see your MySQL container prompt:
+```
+root@inventory-mysql-1346511112-235wj:/#
+```
+
+* Type the following command:
+```
+mysql --user dbuser inventorydb --password
+```
+then type password as the pasword
+
+* In the MySQL prompt, type the following command to list the item IDs:
+
+```
+mysql> select id from items;
+```
+
+You will see the following result:
+```
++-------+
+| id    |
++-------+
+| 13401 |
+| 13402 |
+| 13403 |
+| 13404 |
+| 13405 |
+| 13406 |
+| 13407 |
+| 13408 |
+| 13409 |
+| 13410 |
+| 13411 |
+| 13412 |
++-------+
+12 rows in set (0.00 sec)
+```
 
 
 
