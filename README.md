@@ -140,7 +140,7 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 
 Exit the container by typing `exit`
 
-* Let's restart the database service. Log on to the MySQL container:
+* Log on to the MySQL container:
 
 ```
 kubectl exec -it $MYSQL_ID -- /bin/bash
@@ -149,12 +149,6 @@ kubectl exec -it $MYSQL_ID -- /bin/bash
 You should see your MySQL container prompt:
 ```
 root@inventory-mysql-1346511112-235wj:/#
-```
-
-* Restart the MySQL daemon:
-
-```
-mysqladmin -u root -p start
 ```
 
 * Type the following command:
