@@ -80,31 +80,34 @@ Query OK, 11 rows affected (0.04 sec)
 
 Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
-* Run the following command to obtain the Inventory POD:
+* Run the following command to obtain the ElasticSearch POD:
 
 ```
-export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
+export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
 ```
 
-* Now destroy the Inventory POD:
+* Now destroy the ElasticSearch POD:
 
 ```
-kubectl delete po $INV_ID
+kubectl delete po $ES_ID
 ```
 
-* After a few seconds, you'll see that Kubernetes starts another Inventory POD automatically:
+* After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
 
 ```
 eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po
-NAME                                            READY     STATUS     RESTARTS   AGE
-bluecompute-auth-3701940813-jr4cq               1/1       Running    0          1h
-bluecompute-customer-1247026218-wm166           1/1       Running    0          1h
-bluecompute-customer-couchdb-1485455251-08mg8   1/1       Running    0          1h
-bluecompute-web-deployment-1763171077-wc74h     1/1       Running    0          1h
-catalog-ce-2251916216-6tghv                     1/1       Running    0          1h
-catalog-elasticsearch-8g6h7                     1/1       Running    0          35m
-inventory-ce-614843698-875n5                    0/1       Init:1/2   0          9s
-inventory-mysql-1346511112-235wj                1/1       Running    0          1h
+eduardos-mbp:inventory-mysql edu$ kubectl get po
+NAME                                            READY     STATUS             RESTARTS   AGE
+bluecompute-auth-3701940813-6r3w8               1/1       Running            0          6m
+bluecompute-customer-1247026218-kmsz8           1/1       Running            0          8m
+bluecompute-customer-couchdb-1485455251-c29b0   1/1       Running            0          8m
+bluecompute-web-deployment-1763171077-d7zq6     1/1       Running            0          5m
+catalog-ce-2251916216-hgs74                     1/1       Running            0          5m
+catalog-elasticsearch-1g8wm                     1/1       Terminating        0          8m
+catalog-elasticsearch-mnq2w                     1/1       Running            0          19s
+inventory-ce-614843698-0f8fz                    0/1       CrashLoopBackOff   5          6m
+inventory-mysql-3976943720-ftfv4                2/2       Running            0          8m
+
 ```
 
 After a few minutes, you'll see that the BlueCompute Web UI has now a single item in the catalog.
