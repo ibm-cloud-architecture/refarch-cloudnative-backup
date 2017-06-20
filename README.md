@@ -124,10 +124,14 @@ kubectl exec -it $MYSQL_ID -- /bin/bash
 
 * Stop the MySQL database:
 ```
-/etc/init.d/mysql stop
+mysqladmin -u root -p shutdown
 ```
 
-* In another shell, connect to the Backup container
+type `admin123` as the password
+
+* Exit the MySQL container by typing `exit`
+
+* Connect to the Backup container
 ```
 kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
 ```
@@ -151,7 +155,7 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 
 Exit the container by typing `exit`
 
-* Let's refresh the database data. Back in the shell logged to the MySQL container:
+* Let's restart the database service. Log on to the MySQL container:
 
 ```
 kubectl exec -it $MYSQL_ID -- /bin/bash
@@ -165,7 +169,7 @@ root@inventory-mysql-1346511112-235wj:/#
 * Restart the MySQL daemon:
 
 ```
-/etc/init.d/mysql start
+mysqladmin -u root -p start
 ```
 
 * Type the following command:
