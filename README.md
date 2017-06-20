@@ -4,14 +4,6 @@
 
 This project shows how to back up some components of the BlueCompute application.
 
-## Deploy the BlueCompute application in minikube
-
-Follow these steps to deploy the BlueCompute in minikube
-
-```
-./install_bluecompute_ce.sh minikube
-```
-
 
 ## Back up
 
