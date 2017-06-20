@@ -114,6 +114,29 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 
 ## Restore
 
-Follow these instrutions to restore the backup
+Follow these instrutions to restore the backup. This step assumes you ran the "Simulate a failure" section.
 
-````TBD, but when it's done, it will be awesome````
+* Connect to the Backup container
+```
+kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
+```
+
+* Run the following command:
+```
+./vrestore
+```
+
+You will see the following output:
+
+```
+root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
+[2017-06-20 18:15:21,209] [utilities : 151] [INFO] *****************Start logging to ./Restore.log
+[2017-06-20 18:15:21,209] [restore : 28] [INFO] Starting the restore process.
+[2017-06-20 18:15:21,209] [configureOS : 22] [INFO] Configuring duplicity with IBM Bluemix ObjectStorage.
+[2017-06-20 18:15:21,209] [configureOS : 13] [INFO] Configuring swift client.
+[2017-06-20 18:15:21,210] [restore : 40] [INFO] Configuration is completed.
+[2017-06-20 18:15:27,839] [restore : 70] [INFO] Restoring the backup that is named 'patrocinio-inventory-mysql' is completed. Local and Remote metadata are synchronized, no sync needed.
+```
+
+
+
