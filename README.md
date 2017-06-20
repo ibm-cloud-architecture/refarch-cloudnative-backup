@@ -76,7 +76,7 @@ You should see the following result:
 Query OK, 11 rows affected (0.04 sec)
 ```
 
-* Exit the MySQL prompt by typing `quit` then type ^D to exit the container shell.
+* Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
 Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
@@ -116,6 +116,18 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 
 Follow these instrutions to restore the backup. This step assumes you ran the "Simulate a failure" section.
 
+* Log on to the MySQL container:
+
+```
+kubectl exec -it $MYSQL_ID -- /bin/bash
+```
+
+* Stop the MySQL database:
+```
+/etc/init.d/mysql stop
+```
+Exit the container by typing `exit`
+
 * Connect to the Backup container
 ```
 kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
@@ -137,7 +149,10 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 [2017-06-20 18:15:21,210] [restore : 40] [INFO] Configuration is completed.
 [2017-06-20 18:15:27,839] [restore : 70] [INFO] Restoring the backup that is named 'patrocinio-inventory-mysql' is completed. Local and Remote metadata are synchronized, no sync needed.
 ```
-* Let's validate that the database now has 12 items. Log on to the MySQL container:
+
+Exit the container by typing `exit`
+
+* Let's refresh the database data. Log on to the MySQL container:
 
 ```
 kubectl exec -it $MYSQL_ID -- /bin/bash
@@ -146,6 +161,12 @@ kubectl exec -it $MYSQL_ID -- /bin/bash
 You should see your MySQL container prompt:
 ```
 root@inventory-mysql-1346511112-235wj:/#
+```
+
+* Restart the MySQL daemon:
+
+```
+/etc/init.d/mysql start
 ```
 
 * Type the following command:
