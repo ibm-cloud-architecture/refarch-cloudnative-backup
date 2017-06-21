@@ -4,6 +4,14 @@
 
 This project shows how to back up some components of the BlueCompute application.
 
+## Create a Cloud Object Storage account
+
+Follow these steps to create a Cloud Object Storage account:
+
+* Log on to Bluemix by going to [Bluemix](https://bluemix.net)
+
+
+
 ## Deploy BlueCompute application
 Follow the instructions on this project to deploy BlueCompute: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
