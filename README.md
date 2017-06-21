@@ -10,7 +10,7 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Log on to Bluemix by going to [Bluemix](https://bluemix.net)
 
-* In the upper left side, click the Menu area: !(Menu)[images/menu.png]
+* In the upper left side, click the Menu area: ![Menu](images/menu.png)
 
 
 ## Deploy BlueCompute application
