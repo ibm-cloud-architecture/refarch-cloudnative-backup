@@ -157,6 +157,11 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 
 Exit the container by typing `exit`
 
+* Restart the MySQL container:
+```
+kubectl scale --replicas=1 deploy/inventory-mysql
+```
+
 * Log on to the MySQL container:
 
 ```
