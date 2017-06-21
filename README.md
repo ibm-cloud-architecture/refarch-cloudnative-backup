@@ -2,7 +2,13 @@
 
 ## Introduction
 
-This project shows how to back up some components of the BlueCompute application.
+This project is a hands-on lab to demo how to back up a container component. It uses the [BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes) reference application.
+We will :
+* deploy the Bluecompute application
+* do a backup of the inventory MySQL database to Cloud Object Storage 
+* simulate a problem with MySQL data
+* restore the MySQL data from Cloud Object Storage
+* verify that the database data is correctly restored
 
 ## Create a Cloud Object Storage account
 
