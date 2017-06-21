@@ -1,4 +1,4 @@
-# Cloud Native Backup
+# Cloud Native Backup Hands-On Lab
 
 ## Introduction
 
@@ -11,6 +11,8 @@ The main steps of this lab are:
 * simulate a problem with MySQL data
 * restore the MySQL data from Cloud Object Storage
 * verify that the database data is correctly restored
+
+![Graph](images/graph.png)
 
 ## Create a Cloud Object Storage account
 
