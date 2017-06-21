@@ -61,6 +61,22 @@ Follow the instructions on this project to deploy BlueCompute:
 export BCK_ID=`kubectl get po |grep backup|awk '{print $1}'`
 ```
 
+* Connect to the Backup container
+```
+kubectl exec -it $BCK_ID bash
+```
+
+* Run the following command:
+```
+./vbackup
+```
+
+Then exit the container shell
+
+```
+exit
+```
+
 * Run the following command to check the backup status
 
 ```
