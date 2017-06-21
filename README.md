@@ -12,6 +12,37 @@ Follow these steps to create a Cloud Object Storage account:
 
 * In the upper left side, click the Menu area: ![Menu](images/menu.png)
 
+* Select Service -> Storage: ![Storage](images/storage.png)
+
+* Click *Create Storage service*
+
+* Click *Object Storage*
+
+* Change the Storage name: ![Storage name](images/storage_name.png)
+
+* Click *Create* in the lower right side
+
+## Obtain the Cloud Object Storage credentials
+
+* Back on the Services page, click the Object Storage service you just created
+
+* Click the *Service credentials* area
+
+* Click the *New credential* button
+
+* Change the Name field
+
+* Click the *Add* button
+
+* Once the credential is created, click *View credentials* ![Credentials](images/credentials.png)
+
+* Record the following fields (they will be used in the next step)
+
+** region
+** projectId
+** userId
+** password
+
 
 ## Deploy BlueCompute application
 Follow the instructions on this project to deploy BlueCompute: 
