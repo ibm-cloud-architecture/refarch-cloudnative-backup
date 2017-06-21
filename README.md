@@ -45,12 +45,6 @@ You should see an output like this:
 [2017-06-21 04:02:54,404] [backup : 118] [INFO] Local and Remote metadata are synchronized, no sync needed.
 Last full backup date: none
 ```
-* Run the 
-
-```
-
-```
-
 
 ## Simulate a failure
 
