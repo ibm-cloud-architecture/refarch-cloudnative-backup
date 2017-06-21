@@ -14,7 +14,9 @@ The main steps of this lab are:
 
 ![Graph](images/graph.png)
 
-## Create a Cloud Object Storage account
+## Configure Cloud Object Storage for backups
+
+### Create a Cloud Object Storage account
 
 Follow these steps to create a Cloud Object Storage account:
 
@@ -38,7 +40,7 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Click *Create* in the lower right side
 
-## Obtain the Cloud Object Storage credentials
+### Obtain the Cloud Object Storage credentials
 
 * Back on the Services page, click the Object Storage service you just created
 
@@ -118,6 +120,8 @@ Last full backup date: none
 
 ## Simulate a failure
 
+### Remove database records
+
 Run the following steps to simulate a database corruption:
 
 * Find the MySQL POD:
@@ -193,6 +197,8 @@ Then exit the container shell
 ```bash
 exit
 ```
+
+### Refresh cache
 
 Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
