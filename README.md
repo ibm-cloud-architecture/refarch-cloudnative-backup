@@ -5,10 +5,8 @@
 This project shows how to back up some components of the BlueCompute application.
 
 ## Deploy BlueCompute application
-
-```
-./install_bluecompute_ce.sh eduardo CASE-Production <api-key>
-```
+Follow the instructions on this project to deploy BlueCompute: 
+[Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
 ## Back up
 
