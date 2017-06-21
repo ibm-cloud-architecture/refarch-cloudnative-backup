@@ -6,6 +6,7 @@ This project is a **hands-on lab** to demo how to **back up a cloud native appli
 For this lab we will add and test a [backup tool](https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html) to the inventory database of the [BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes) reference application.
 
 The main steps of this lab are:
+* configure object storage
 * deploy the Bluecompute application
 * do a backup of the inventory MySQL database to Cloud Object Storage 
 * simulate a problem with MySQL data
