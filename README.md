@@ -229,5 +229,6 @@ You will see the following result:
 12 rows in set (0.00 sec)
 ```
 
+* Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
 
