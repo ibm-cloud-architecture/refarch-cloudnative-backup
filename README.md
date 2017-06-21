@@ -121,11 +121,21 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 
 ## Restore
 
-Follow these instrutions to restore the backup. This step assumes you ran the "Simulate a failure" section.
+Follow these instrutions to restore the backup. 
+
+* Stop the MySQL container
+```
+kubectl scale --replicas=0 deploy/inventory-mysql
+```
+
+* Find the Backup container
+```
+export BCK_ID=`kubectl get po |grep backup|awk '{print $1}'`
+```
 
 * Connect to the Backup container
 ```
-kubectl exec -it $MYSQL_ID -c inventory-backup-container bash
+kubectl exec -it $BCK_ID bash
 ```
 
 * Run the following command:
