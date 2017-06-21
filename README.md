@@ -38,10 +38,10 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Record the following fields (they will be used in the next step)
 
-** region
-** projectId
-** userId
-** password
+	* region
+	* projectId
+	* userId
+	* password
 
 
 ## Deploy BlueCompute application
