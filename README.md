@@ -1,4 +1,4 @@
-# Cloud Native Backup Hands-On Lab
+# Cloud Native Backup - Hands-On Lab
 
 ## Introduction
 
