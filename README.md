@@ -57,17 +57,17 @@ Follow the instructions on this project to deploy BlueCompute:
 ## Back up
 
 * Find the Backup container
-```
+```bash
 export BCK_ID=`kubectl get po |grep backup|awk '{print $1}'`
 ```
 
 * Connect to the Backup container
-```
+```bash
 kubectl exec -it $BCK_ID bash
 ```
 
 * Run the following command:
-```
+```bash
 ./vbackup
 ```
 
@@ -75,13 +75,13 @@ kubectl exec -it $BCK_ID bash
 
 Then exit the container shell
 
-```
+```bash
 exit
 ```
 
 * Run the following command to check the backup status
 
-```
+```bash
 kubectl logs $BCK_ID
 ```
 
@@ -112,13 +112,13 @@ Run the following steps to simulate a database corruption:
 
 * Find the MySQL POD:
 
-```
+```bash
 export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
 ```
 
 * Open an SSH connection to the MySQL POD:
 
-```
+```bash
 kubectl exec -it $MYSQL_ID -- /bin/bash
 ```
 
@@ -128,7 +128,7 @@ root@inventory-mysql-1346511112-235wj:/#
 ```
 
 * Type the following command:
-```
+```bash
 mysql --user dbuser inventorydb --password
 ```
 then type "password" as the password
@@ -180,7 +180,7 @@ quit
 
 Then exit the container shell
 
-```
+```bash
 exit
 ```
 
@@ -188,14 +188,14 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
 * Run the following command to obtain the ElasticSearch and Inventory PODs:
 
-```
-export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
+```bash
+export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`&
 export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
 ```
 
 * Now destroy the ElasticSearch and Inventory PODs:
 
-```
+```bash
 kubectl delete po $ES_ID $INV_ID
 ```
 
@@ -225,17 +225,17 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 Follow these instrutions to restore the backup. 
 
 * Stop the MySQL container, by reducing the number of pods to 0
-```
+```bash
 kubectl scale --replicas=0 deploy/inventory-mysql
 ```
 
 * Connect to the Backup container
-```
+```bash
 kubectl exec -it $BCK_ID bash
 ```
 
 * Run the following command:
-```
+```bash
 ./vrestore
 ```
 
@@ -250,18 +250,18 @@ You will see the following output:
 ```
 
 Exit the container by typing
-```
+```bash
 exit
 ```
 
 * Restart the MySQL container, by increasing the number of pods to 1:
-```
+```bash
 kubectl scale --replicas=1 deploy/inventory-mysql
 ```
 
 * Log on to the new MySQL container:
 
-```
+```bash
 export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
 kubectl exec -it $MYSQL_ID -- /bin/bash
 ```
@@ -272,7 +272,7 @@ root@inventory-mysql-1346511112-235wj:/#
 ```
 
 * Type the following command:
-```
+```bash
 mysql --user dbuser inventorydb --password
 ```
 then type password as the pasword
