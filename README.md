@@ -218,6 +218,8 @@ inventory-mysql-3976943720-ftfv4                2/2       Running            0  
 
 After a few minutes, you'll see that the BlueCompute Web UI has now a single item in the catalog.
 
+![Single item](images/single_item.png)
+
 ## Restore
 
 Follow these instrutions to restore the backup. 
