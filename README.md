@@ -231,4 +231,4 @@ You will see the following result:
 
 * Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
-
+* Wait a few minutes and refresh the BlueCompute Web UI page. You'll see all the items back!
