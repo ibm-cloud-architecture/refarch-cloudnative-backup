@@ -12,8 +12,6 @@ This project shows how to back up some components of the BlueCompute application
 
 ## Back up
 
-Follow these instructions to add a scheduled backup to BlueCompute database
-
 * Find the Backup container
 ```
 export BCK_ID=`kubectl get po |grep backup|awk '{print $1}'`
