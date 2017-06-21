@@ -113,12 +113,12 @@ root@inventory-mysql-1346511112-235wj:/#
 ```
 mysql --user dbuser inventorydb --password
 ```
-then type password as the pasword
+then type "password" as the password
 
 * In the MySQL prompt, type the following command to list the item IDs:
 
 ```
-mysql> select id from items;
+select id from items;
 ```
 
 You will see the following result:
@@ -142,10 +142,10 @@ You will see the following result:
 12 rows in set (0.00 sec)
 ```
 
-* Now delete all the records except one:
+* Now, in the MySQL prompt, delete all the records except one:
 
 ```
-mysql> delete from items where id != 13401;
+delete from items where id != 13401;
 ```
 
 You should see the following result:
@@ -154,7 +154,17 @@ You should see the following result:
 Query OK, 11 rows affected (0.04 sec)
 ```
 
-* Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
+Exit the MySQL prompt by typing
+
+```
+quit
+```
+
+Then exit the container shell
+
+```
+exit
+```
 
 Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
@@ -175,7 +185,6 @@ kubectl delete po $ES_ID $INV_ID
 
 ```
 eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po
-eduardos-mbp:inventory-mysql edu$ kubectl get po
 NAME                                            READY     STATUS             RESTARTS   AGE
 bluecompute-auth-3701940813-6r3w8               1/1       Running            0          6m
 bluecompute-customer-1247026218-kmsz8           1/1       Running            0          8m
@@ -195,7 +204,7 @@ After a few minutes, you'll see that the BlueCompute Web UI has now a single ite
 
 Follow these instrutions to restore the backup. 
 
-* Stop the MySQL container
+* Stop the MySQL container, by reducing the number of pods to 0
 ```
 kubectl scale --replicas=0 deploy/inventory-mysql
 ```
@@ -212,7 +221,6 @@ kubectl exec -it $BCK_ID bash
 
 You will see the following output:
 ```
-root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 [2017-06-20 18:15:21,209] [utilities : 151] [INFO] *****************Start logging to ./Restore.log
 [2017-06-20 18:15:21,209] [restore : 28] [INFO] Starting the restore process.
 [2017-06-20 18:15:21,209] [configureOS : 22] [INFO] Configuring duplicity with IBM Bluemix ObjectStorage.
@@ -221,14 +229,17 @@ root@inventory-mysql-3976943720-ftfv4:/backup_restore# ./vrestore
 [2017-06-20 18:15:27,839] [restore : 70] [INFO] Restoring the backup that is named 'patrocinio-inventory-mysql' is completed. Local and Remote metadata are synchronized, no sync needed.
 ```
 
-Exit the container by typing `exit`
+Exit the container by typing
+```
+exit
+```
 
-* Restart the MySQL container:
+* Restart the MySQL container, by increasing the number of pods to 1:
 ```
 kubectl scale --replicas=1 deploy/inventory-mysql
 ```
 
-* Log on to the MySQL container:
+* Log on to the new MySQL container:
 
 ```
 export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
@@ -249,7 +260,7 @@ then type password as the pasword
 * In the MySQL prompt, type the following command to list the item IDs:
 
 ```
-mysql> select id from items;
+select id from items;
 ```
 
 You will see the following result:
