@@ -189,6 +189,7 @@ kubectl scale --replicas=1 deploy/inventory-mysql
 * Log on to the MySQL container:
 
 ```
+export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
 kubectl exec -it $MYSQL_ID -- /bin/bash
 ```
 
