@@ -11,9 +11,11 @@ Follow these steps to create a Cloud Object Storage account:
 * Log on to Bluemix by going to [Bluemix](https://bluemix.net)
 
 * In the upper left side, click the Menu area
+
 ![Menu](images/menu.png)
 
 * Select Service -> Storage
+
 ![Storage](images/storage.png)
 
 * Click *Create Storage service*
@@ -21,6 +23,7 @@ Follow these steps to create a Cloud Object Storage account:
 * Click *Object Storage*
 
 * Change the Storage name
+
 ![Storage name](images/storage_name.png)
 
 * Click *Create* in the lower right side
