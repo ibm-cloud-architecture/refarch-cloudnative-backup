@@ -71,6 +71,8 @@ kubectl exec -it $BCK_ID bash
 ./vbackup
 ```
 
+* Press ^C to stop the daily backup
+
 Then exit the container shell
 
 ```
