@@ -433,12 +433,24 @@ Follow these instructions to restore the backup.
 
 * Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
-* Recycle the `inventory-ce` service by deleting the pod and letting Kubernetes recreate it to refresh the cache from the database:
+Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
+
+* Run the following command to obtain the ElasticSearch and Inventory PODs:
 
   ```bash
-  # kubectl get pod | grep inventory-ce
-  inventory-ce-1218757904-x5876                               1/1       Running   0          2h
-  # kubectl delete pod inventory-ce-1218757904-x5876
+  export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
+  export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
   ```
+
+* Now destroy the ElasticSearch and Inventory PODs:
+
+  ```bash
+  kubectl delete po $ES_ID $INV_ID
+  ```
+
+* After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
+
+  ```bash
+  # kubectl get po
 
 * Wait a few minutes and refresh the BlueCompute Web UI page. You'll see all the items back!
