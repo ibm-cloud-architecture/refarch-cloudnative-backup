@@ -15,6 +15,11 @@ The main steps of this lab are:
 
 ![Graph](images/graph.png)
 
+## Deploy BlueCompute application
+Follow the instructions on this project to deploy BlueCompute: 
+[Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
+
+
 ## Configure Cloud Object Storage for backups
 
 ### Create a Cloud Object Storage account
@@ -41,9 +46,6 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Click *Create* in the lower right side
 
-## Deploy BlueCompute application
-Follow the instructions on this project to deploy BlueCompute: 
-[Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
 ## Bind the Object Storage credentials to the Kubernetes cluster.
 
