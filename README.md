@@ -95,7 +95,7 @@ kubectl get secrets
 
 ## Enable the backup on the MySQL container
 
-Find the name of the chart used for the MySQL instance for Inventory Microservice:
+Find the name of the chart (Help package manager template) used for the MySQL instance for Inventory Microservice:
 
 ```bash
 helm list -q 'inventory-mysql'
@@ -301,7 +301,7 @@ Follow these instructions to restore the backup.
   cd refarch-cloudnative-backup/chart
   ```
 
-* Install the chart, which starts a job that restores the backup from object storage.  Substitute the following:
+* Install the chart, which starts a job that restores the backup from object storage. Substitute the following:
 
   * `<name of inventory MySQL release>`: the name of the release in helm.  This can be retrieved with
   
@@ -323,7 +323,7 @@ Follow these instructions to restore the backup.
   ibmcase-restore
   ```
 
-* A Job will be created.
+* A job will be created
   
   ```bash
   # kubectl get jobs 
