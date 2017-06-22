@@ -15,7 +15,7 @@ The main steps of this lab are:
 
 ![Graph](images/graph.png)
 
-# Deploy BlueCompute application
+## Deploy BlueCompute application
 Follow the instructions on this project to deploy BlueCompute: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
