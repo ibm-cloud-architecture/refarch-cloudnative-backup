@@ -59,6 +59,11 @@ In the terminal, find the name of the Object Storage service
 bx cf services | grep Object-Storage
 ```
 
+Get the name of your Kubernetes cluster by running the following command:
+```bash
+bx cs clusters
+```
+
 Bind this Object Storage service to the cluster:
 
 ```bash
