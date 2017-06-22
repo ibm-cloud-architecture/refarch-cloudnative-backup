@@ -450,7 +450,7 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
 * After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
 
-  ```bash
+```bash
   # kubectl get po
 NAME                                                     READY     STATUS        RESTARTS   AGE
 bluecompute-auth-3257476579-58h5t                        1/1       Running       0          3h
