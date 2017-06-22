@@ -126,6 +126,19 @@ helm upgrade \
 
 This command adds a backup container that performs the daily incremental backup against the `/var/lib/mysql` directory where all of the MySQL data is stored.
 
+You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
+
+```bash
+kubectl get po | grep inventory-mysql
+```
+
+You will see the following result:
+```bash
+eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po | grep inventory-mysql
+default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0          5m
+```
+
+
 ## Simulate a failure
 
 ### Remove database records
