@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-ibmcase-restore-volume-{{ randAlphaNum 5 | lower }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    tier: data
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  template:
+    metadata:
+      labels:
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        tier: data
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: restore-volume-container
+          image: ibmcase/ibm-backup-restore
+          imagePullPolicy: IfNotPresent
+          command: ["/scripts/docker-entrypoint.sh", "/bin/bash", "-c", "/backup_restore/vrestore"]
+          env:
+          - name: BACKUP_NAME
+            value: {{ required "A valid value of objectStorage.backupName is required!" .Values.objectStorage.backupName }}
+          - name: RESTORE_DIRECTORY
+            value: /var/lib/mysql
+          - name: OBJECT_STORAGE_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: {{ required "A valid value of objectStorage.secretName is required!" .Values.objectStorage.secretName }}
+                key: binding
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: {{ .Chart.Name }}-mysql
+      volumes:
+        - name: {{ .Chart.Name }}-mysql
+{{- if .Values.pvc.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}
+{{ else }}
+          hostPath:
+            path: { required "A valid value of hostPath is required!" .Values.hostPath }}
+{{ end }}

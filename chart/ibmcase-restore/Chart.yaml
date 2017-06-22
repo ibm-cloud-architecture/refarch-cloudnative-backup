@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Restore data from backup
+name: ibmcase-restore
+version: 0.1.0

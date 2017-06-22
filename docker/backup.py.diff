@@ -1,0 +1,13 @@
+--- backup.py	2017-06-09 11:31:59.000000000 +0000
++++ backup.py.new	2017-06-22 15:33:42.713601290 +0000
+@@ -13,9 +13,9 @@
+ import configureOS, utilities
+ 
+ 
+ def create_duplicity_command(backupName, encriptionRequired, backupType, backupDirectory, excludeDirectories):
+-    duplicity_command="duplicity "
++    duplicity_command="duplicity --allow-source-mismatch "
+     if encriptionRequired == 'no':
+         duplicity_command = duplicity_command + " --no-encryption"
+     else:
+         #configure duplicity for encryption
