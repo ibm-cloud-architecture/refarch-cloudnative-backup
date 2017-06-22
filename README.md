@@ -226,7 +226,7 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 * Run the following command to obtain the ElasticSearch and Inventory PODs:
 
 ```bash
-export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`&
+export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
 export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
 ```
 
