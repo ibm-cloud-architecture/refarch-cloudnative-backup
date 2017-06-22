@@ -7,12 +7,12 @@ For this lab we will add and test a [backup tool](https://console.bluemix.net/do
 
 ### Pre-requisites
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), a version control system tool
-* A [Kubernetes](https://kubernetes.io/) cluster
+* A Bluemix [Kubernetes](https://kubernetes.io/) cluster in the **US South** region
   * This hands-on lab has been tested with [Bluemix free Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/launch)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) command-line interface must be installed
   * For Bluemix Kubernetes Cluster, check this [documentation page](https://console.bluemix.net/docs/containers/cs_cli_install.html) if needed
 * [Helm](https://kubernetes.io/docs/tasks/tools/install-kubectl/), the Kubernetes package manager, must be installed
-  * Check this [installation page](https://github.com/kubernetes/helm/blob/master/docs/install.md) if needed
+  * Check this [installation page](https://github.com/kubernetes/helm/blob/master/docs/install.md), if needed
 
 ### Summary of the hands-on labs steps
 The main steps of this lab are:
@@ -26,12 +26,12 @@ The main steps of this lab are:
 ![Graph](images/graph.png)
 
 ## 1 - Deploy the BlueCompute application
-Follow the instructions on this project to deploy BlueCompute: 
+Follow the instructions on this project to deploy BlueCompute in the **US South** region: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
 When the deployment, you should be able to access BlueCompute web page and see the catalog with 12 items, including the ones displayed in the following screen:
-![Catalog](images/catalog.png)
 
+![Catalog](images/catalog.png)
 
 ## 2 - Configure Cloud Object Storage for backups
 
@@ -53,39 +53,42 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Click *Object Storage*
 
-* Change the Storage name
+* Choose the storage name
 
 ![Storage name](images/storage_name.png)
 
-* Click *Create* in the lower right side
+* Click *Create* in the lower right corner
 
 
-## Bind the Object Storage credentials to the Kubernetes cluster.
+### Bind the Object Storage credentials to the Kubernetes cluster
 
-In the terminal, find the name of the Object Storage service
+* In the terminal, find the name of the Object Storage service
 
 ```bash
 bx cf services | grep Object-Storage
 ```
 
-Get the name of your Kubernetes cluster by running the following command:
+  * If you get an empty response for this command, check that you are connected to the [right region](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_api), [organisation and space](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
+
+* Get the name of your Kubernetes cluster
 ```bash
 bx cs clusters
 ```
 
-Bind this Object Storage service to the cluster:
+* Bind this Object Storage service to the cluster
 
 ```bash
-bx cs cluster-service-bind <cluster-name> default "<object storage service>"
+bx cs cluster-service-bind <cluster-name> default <object-storage-name>
 ```
 
-For example, in my cluster `awesome-kube`, with my Object Storage service named `jkwong-objstorage`:
+  * For example, in my cluster `awesome-kube`, with my Object Storage service named `awesome-objstorage`:
 
 ```bash
-bx cs cluster-service-bind awesome-kube default jkwong-objstorage
+bx cs cluster-service-bind awesome-kube default awesome-objstorage
 ```
 
-Find the name of the created secret for object storage; the name should be similar to `binding-<service-name>`
+* Find the name of the created secret for object storage
+ *  The name should be similar to `binding-<service-name>`
 
 ```bash
 kubectl get secrets
