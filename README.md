@@ -6,6 +6,7 @@ This project is a **hands-on lab** to demo how to **back up a cloud native appli
 For this lab we will add and test a [backup tool](https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html) to the inventory database of the [BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes) reference application.
 
 ### Pre-requisites
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), a version control system tool
 * A [Kubernetes](https://kubernetes.io/) cluster
   * This hands-on lab has been tested with [Bluemix free Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/launch)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) command-line interface must be installed
@@ -15,32 +16,31 @@ For this lab we will add and test a [backup tool](https://console.bluemix.net/do
 
 ### Summary of the hands-on labs steps
 The main steps of this lab are:
-* configure object storage
-* deploy the Bluecompute application
-* do a backup of the inventory MySQL database to Cloud Object Storage 
-* simulate a problem with MySQL data
-* restore the MySQL data from Cloud Object Storage
-* verify that the database data is correctly restored
+1. deploy the Bluecompute application
+2. configure Cloud Object Storage for backups
+3. do a backup of the inventory MySQL database to Cloud Object Storage 
+4. simulate a problem with MySQL data
+5. restore the MySQL data from Cloud Object Storage
+6. verify that the database data is correctly restored
 
 ![Graph](images/graph.png)
 
-## Deploy BlueCompute application
+## 1 - Deploy the BlueCompute application
 Follow the instructions on this project to deploy BlueCompute: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
-At the end, you will see the catalog with 12 items, including the ones displayed in the following screen:
-
+When the deployment, you should be able to access BlueCompute web page and see the catalog with 12 items, including the ones displayed in the following screen:
 ![Catalog](images/catalog.png)
 
 
-## Configure Cloud Object Storage for backups
+## 2 - Configure Cloud Object Storage for backups
 
 ### Create a Cloud Object Storage account
 
 Follow these steps to create a Cloud Object Storage account:
 
 * Log on to Bluemix by going to [Bluemix](https://bluemix.net)
-
+* If you are not using US region, switch to "US South" in the top menu
 * In the upper left side, click the Menu area
 
   ![Menu](images/menu.png)
