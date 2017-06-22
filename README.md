@@ -13,7 +13,7 @@ For this lab we will add and test a [backup tool](https://console.bluemix.net/do
 * [Helm](https://kubernetes.io/docs/tasks/tools/install-kubectl/), the Kubernetes package manager, must be installed
   * Check this [installation page](https://github.com/kubernetes/helm/blob/master/docs/install.md) if needed
 
-### Hands-on lab
+### Summary of the hands-on labs steps
 The main steps of this lab are:
 * configure object storage
 * deploy the Bluecompute application
