@@ -63,12 +63,11 @@ Follow these steps to create a Cloud Object Storage account:
 ### Bind the Object Storage credentials to the Kubernetes cluster
 
 * In the terminal, find the name of the Object Storage service
+  * If you get an empty response for this command, check that you are connected to the right [region](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_api), [organisation and space](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
 
 ```bash
 bx cf services | grep Object-Storage
 ```
-
-  * If you get an empty response for this command, check that you are connected to the [right region](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_api), [organisation and space](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
 
 * Get the name of your Kubernetes cluster
 ```bash
@@ -88,7 +87,7 @@ bx cs cluster-service-bind awesome-kube default awesome-objstorage
 ```
 
 * Find the name of the created secret for object storage
- *  The name should be similar to `binding-<service-name>`
+  * The name should be similar to `binding-<service-name>`
 
 ```bash
 kubectl get secrets
@@ -111,7 +110,7 @@ git checkout kube-int
 cd mysql/chart
 ```
 
-Use the following command to enable the backup, 
+Use the following command to enable the backup
 
 * `<name of backup>` refers the container on the Object Storage service it will use to upload the data to
 * `binding-<service-name>` is the name of the secrets (using the output of `kubectl get secrets` above)
@@ -129,26 +128,26 @@ helm upgrade \
 
 This command adds a backup container that performs the daily incremental backup against the `/var/lib/mysql` directory where all of the MySQL data is stored.
 
-You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
+* You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
 
 ```bash
 kubectl get po | grep inventory-mysql
 ```
 
-You will see the following result:
+* You will see the following result:
 
 ```bash
 eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po | grep inventory-mysql
 default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0          5m
 ```
 
-Check the logs of the backup container to ensure that the backup has completed.
+* Check the logs of the backup container to ensure that the backup has completed
 
 ```bash
 kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inventory-backup-container
 ```
 
-The backup completes when you see output similar to the following:
+* The backup completes when you see output similar to the following:
 
 ```
 [2017-06-22 16:58:52,227] [backup : 102] [INFO] Backup done SUCCESSFULLY!!!!
@@ -332,7 +331,7 @@ Follow these instructions to restore the backup.
   quoting-sparrow-ibmcase-restore-volume-jfilf   1         0            1m
   ```
   
-  Get the pod associated with this job:
+* Get the pod associated with this job:
   
   ```bash
   # kubectl get pods -l job-name=quoting-sparrow-ibmcase-restore-volume-jfilf -a
@@ -340,13 +339,13 @@ Follow these instructions to restore the backup.
   quoting-sparrow-ibmcase-restore-volume-jfilf-g9280   1/1       Running     0          7m
   ```
 
-  Look at the logs associated with the job:
+* Look at the logs associated with the job:
   
   ```bash
   # kubectl logs quoting-sparrow-ibmcase-restore-volume-jfilf-g9280
   ```
   
-  You will see similar to the following output:
+* You will see similar to the following output:
   
   ```
   [2017-06-22 17:22:56,036] [utilities : 151] [INFO] *****************Start logging to ./Restore.log
@@ -364,7 +363,7 @@ Follow these instructions to restore the backup.
   Last full backup date: Thu Jun 22 13:46:12 2017
   ```
   
-  When the job completes, the restore has completed.
+* When the job completes, the restore has completed
   
   ```bash
   # kubectl get jobs 
@@ -378,7 +377,7 @@ Follow these instructions to restore the backup.
   kubectl scale --replicas=1 deploy/default-inventory-mysql-ibmcase-mysql
   ```
   
-  Wait until the new container has started, when `AVAILABLE` goes to `1`.
+* Wait until the new container has started, when `AVAILABLE` goes to `1`
   
   ```bash
   # kubectl get deployments default-inventory-mysql-ibmcase-mysql
@@ -436,7 +435,7 @@ Follow these instructions to restore the backup.
 
 * Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
-Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
+  * Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
 * Run the following command to obtain the ElasticSearch and Inventory PODs:
 
@@ -468,4 +467,4 @@ inventory-ce-1218757904-rvlsm                            1/1       Running      
 nginx                                                    1/1       Running       0          1d
 ```
 
-* Wait a few minutes and refresh the BlueCompute Web UI page. You'll see all the items back!
+* Wait a few minutes and refresh the BlueCompute Web UI page. You'll see all the items are back!
