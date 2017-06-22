@@ -452,8 +452,6 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
   ```bash
   # kubectl get po
-  Every 2.0s: kubectl get po                                                   Thu Jun 22 15:19:18 2017
-
 NAME                                                     READY     STATUS        RESTARTS   AGE
 bluecompute-auth-3257476579-58h5t                        1/1       Running       0          3h
 bluecompute-customer-3427541376-9ljcv                    1/1       Running       0          3h
