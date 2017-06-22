@@ -39,5 +39,5 @@ spec:
             claimName: {{ .Values.pvc.name }}
 {{ else }}
           hostPath:
-            path: { required "A valid value of hostPath is required!" .Values.hostPath }}
+            path: {{ required "A valid value of hostPath is required!" .Values.hostPath }}
 {{ end }}
