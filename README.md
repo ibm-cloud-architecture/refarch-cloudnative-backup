@@ -19,6 +19,10 @@ The main steps of this lab are:
 Follow the instructions on this project to deploy BlueCompute: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
+At the end, you will see the catalog with 12 items, including the ones displayed in the following screen:
+
+![Catalog](images/catalog.png)
+
 
 ## Configure Cloud Object Storage for backups
 
