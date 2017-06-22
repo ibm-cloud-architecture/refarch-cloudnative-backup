@@ -87,7 +87,7 @@ kubectl get secrets
 Find the name of the chart used for the MySQL instance for Inventory Microservice:
 
 ```bash
-helm list -q 'inventory-mysql
+helm list -q 'inventory-mysql'
 ```
 
 Enable backup on this chart using the source chart stored in the [refarch-cloudnative-resiliency](https://github.com/ibm-cloud-architecture/refarch-cloudnative-resiliency/tree/kube-int) repository:
