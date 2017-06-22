@@ -5,6 +5,15 @@
 This project is a **hands-on lab** to demo how to **back up a cloud native application**.
 For this lab we will add and test a [backup tool](https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html) to the inventory database of the [BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes) reference application.
 
+### Pre-requisites
+* A [Kubernetes](https://kubernetes.io/) cluster
+  * This hands-on lab has been tested with [Bluemix free Kubernetes cluster](https://console.bluemix.net/containers-kubernetes/launch)
+* [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) command-line interface must be installed
+  * For Bluemix Kubernetes Cluster, check this [documentation page](https://console.bluemix.net/docs/containers/cs_cli_install.html) if needed
+* [Helm](https://kubernetes.io/docs/tasks/tools/install-kubectl/), the Kubernetes package manager, must be installed
+  * Check this [installation page](https://github.com/kubernetes/helm/blob/master/docs/install.md) if needed
+
+### Hands-on lab
 The main steps of this lab are:
 * configure object storage
 * deploy the Bluecompute application
