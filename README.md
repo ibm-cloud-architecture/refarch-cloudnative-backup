@@ -317,7 +317,7 @@ Follow these instructions to restore the backup.
   helm install \
   --set hostPath=/var/lib/mysql-<name of inventory MySQL release> \
   --set objectStorage.backupName=<name of backup> \
-  --set objStorage.secretName=binding-<service-name>
+  --set objectStorage.secretName=binding-<service-name>
   ibmcase-restore
   ```
 
