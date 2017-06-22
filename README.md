@@ -10,13 +10,19 @@ Well, you might be wondering if you really need a backup, if your application is
 * for **compliance regulations**: for compliance reasons, you might need to archive your data and keep it for a long time. For Cloud Native Application, this requirement can be even more accentuated, as the data might be spread through multiple databases (in different database engines), instead of a single one, as it's the case in many monolithic applications.
 
 ### Hands-on lab architecture
-For this hands-on lab, we will use the following architecture.
+For this hands-on lab, we will use the following architecture:
+* BlueCompute Application is deployed to a Kybernetes Cluster in Bluemix
+* A backup container in the same Kybernetes Cluster will access the MySQL directory of the application and back it up to a Cloud Storage service in Bluemix
+* When needed, you can launch a command to have the backup container restore the MySQL directory from the Cloud Storage service
+
 ![Graph](images/graph.png)
 
-This is of course a very limited backup solution:
+This is of course a simplified backup solution:
 * We backup and restore the MySQL work directory
   * this process is not sufficient if you need to ensure strong database consistency
-  * to restore the database, you need to stop the database which may not be acceptable depending of the application
+  * to restore the database, you need to stop the database which may not be acceptable depending of the application criticity
+* Persistance Volume is not supported in the Bluemix free cluster. The application configuration is tailored the the Bluemix free cluster, but would need to be changed for a multi-node environment. 
+
 In a true production environment, it is very important to understand the business and technical requirements for high-availability to design the right architecture. There is no "one-size fits all" solution!
 
 ### Pre-requisites
@@ -41,7 +47,7 @@ The main steps of this lab are:
 Follow the instructions on this project to deploy BlueCompute in the **US South** region: 
 [Deploy BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes)
 
-When the deployment, you should be able to access BlueCompute web page and see the catalog with 12 items, including the ones displayed in the following screen:
+When the deployment is finished, you should be able to access BlueCompute web page and see the catalog with 12 items, including the ones displayed in the following screen:
 
 ![Catalog](images/catalog.png)
 
