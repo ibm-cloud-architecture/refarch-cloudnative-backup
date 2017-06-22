@@ -43,11 +43,11 @@ Follow these steps to create a Cloud Object Storage account:
 
 * In the upper left side, click the Menu area
 
-![Menu](images/menu.png)
+  ![Menu](images/menu.png)
 
 * Select Service -> Storage
 
-![Storage](images/storage.png)
+  ![Storage](images/storage.png)
 
 * Click *Create Storage service*
 
@@ -159,78 +159,78 @@ Run the following steps to simulate a database corruption:
 
 * Find the MySQL POD:
 
-```bash
-export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
-```
+  ```bash
+  export MYSQL_ID=`kubectl get po |grep mysql|awk '{print $1}'`
+  ```
 
 * Open an SSH connection to the MySQL POD:
 
-```bash
-kubectl exec -it $MYSQL_ID -- /bin/bash
-```
+  ```bash
+  kubectl exec -it $MYSQL_ID -- /bin/bash
+  ```
 
-You should see your MySQL container prompt:
-```
-root@inventory-mysql-1346511112-235wj:/#
-```
+  You should see your MySQL container prompt:
+  ```
+  root@inventory-mysql-1346511112-235wj:/#
+  ```
 
 * Type the following command:
 
-```bash
-mysql --u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb
-```
+  ```bash
+  mysql --u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb
+  ```
 
 * In the MySQL prompt, type the following command to list the item IDs:
 
-```mysql
-select id from items;
-```
+  ```mysql
+  select id from items;
+  ```
 
-You will see the following result:
+  You will see the following result:
 
-```mysql
-+-------+
-| id    |
-+-------+
-| 13401 |
-| 13402 |
-| 13403 |
-| 13404 |
-| 13405 |
-| 13406 |
-| 13407 |
-| 13408 |
-| 13409 |
-| 13410 |
-| 13411 |
-| 13412 |
-+-------+
-12 rows in set (0.00 sec)
-```
+  ```mysql
+  +-------+
+  | id    |
+  +-------+
+  | 13401 |
+  | 13402 |
+  | 13403 |
+  | 13404 |
+  | 13405 |
+  | 13406 |
+  | 13407 |
+  | 13408 |
+  | 13409 |
+  | 13410 |
+  | 13411 |
+  | 13412 |
+  +-------+
+  12 rows in set (0.00 sec)
+  ```
 
 * Now, in the MySQL prompt, delete all the records except one:
 
-```mysql
-delete from items where id != 13401;
-```
+  ```mysql
+  delete from items where id != 13401;
+  ```
 
-You should see the following result:
+  You should see the following result:
 
-```mysql
-Query OK, 11 rows affected (0.04 sec)
-```
+  ```mysql
+  Query OK, 11 rows affected (0.04 sec)
+  ```
 
-Exit the MySQL prompt by typing
+  Exit the MySQL prompt by typing
 
-```mysql
-quit
-```
+  ```mysql
+  quit
+  ```
 
-Then exit the container shell
+  Then exit the container shell
 
-```bash
-exit
-```
+  ```bash
+  exit
+  ```
 
 ### Refresh cache
 
@@ -238,39 +238,37 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
 * Run the following command to obtain the ElasticSearch and Inventory PODs:
 
-```bash
-export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
-export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
-```
+  ```bash
+  export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
+  export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
+  ```
 
 * Now destroy the ElasticSearch and Inventory PODs:
 
-```bash
-kubectl delete po $ES_ID $INV_ID
-```
+  ```bash
+  kubectl delete po $ES_ID $INV_ID
+  ```
 
 * After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
 
-```
-eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po
-NAME                                            READY     STATUS             RESTARTS   AGE
-bluecompute-auth-3701940813-6r3w8               1/1       Running            0          6m
-bluecompute-customer-1247026218-kmsz8           1/1       Running            0          8m
-bluecompute-customer-couchdb-1485455251-c29b0   1/1       Running            0          8m
-bluecompute-web-deployment-1763171077-d7zq6     1/1       Running            0          5m
-catalog-ce-2251916216-hgs74                     1/1       Running            0          5m
-catalog-elasticsearch-1g8wm                     1/1       Terminating        0          8m
-catalog-elasticsearch-mnq2w                     1/1       Running            0          19s
-inventory-ce-614843698-0f8fz                    0/1       CrashLoopBackOff   5          6m
-inventory-mysql-3976943720-ftfv4                2/2       Running            0          8m
+  ```bash
+  # kubectl get po
+  NAME                                            READY     STATUS             RESTARTS   AGE
+  bluecompute-auth-3701940813-6r3w8               1/1       Running            0          6m
+  bluecompute-customer-1247026218-kmsz8           1/1       Running            0          8m
+  bluecompute-customer-couchdb-1485455251-c29b0   1/1       Running            0          8m
+  bluecompute-web-deployment-1763171077-d7zq6     1/1       Running            0          5m
+  catalog-ce-2251916216-hgs74                     1/1       Running            0          5m
+  catalog-elasticsearch-1g8wm                     1/1       Terminating        0          8m
+  catalog-elasticsearch-mnq2w                     1/1       Running            0          19s
+  inventory-ce-614843698-0f8fz                    0/1       CrashLoopBackOff   5          6m
+  inventory-mysql-3976943720-ftfv4                2/2       Running            0          8m
 
-```
+  ```
 
-After a few minutes, you'll see that the BlueCompute Web UI has now a single item in the catalog.
+  After a few minutes, you'll see that the BlueCompute Web UI has now a single item in the catalog.
 
-![Single item](images/single_item.png)
-
-
+  ![Single item](images/single_item.png)
 
 ## Restore
 
@@ -336,9 +334,9 @@ Follow these instructions to restore the backup.
   ```bash
   # kubectl get pods -l job-name=quoting-sparrow-ibmcase-restore-volume-jfilf -a
   NAME                                                 READY     STATUS      RESTARTS   AGE
-  quoting-sparrow-ibmcase-restore-volume-jfilf-g9280   1/1       Running     0          7m
+  quoting-sparrow-ibmcase-restore-volume-jfilf-g9280   1/1       Running     0          7m
   ```
-  
+
   Look at the logs associated with the job:
   
   ```bash
