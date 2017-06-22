@@ -296,7 +296,7 @@ Follow these instructions to restore the backup.
   Switch to the `chart` directory:
   
   ```bash
-  cd refarch-clodnative-backup/chart
+  cd refarch-cloudnative-backup/chart
   ```
 
 * Install the chart, which starts a job that restores the backup from object storage.  Substitute the following:
