@@ -1,9 +1,23 @@
 # Cloud Native Backup - Hands-On Lab
 
 ## Introduction
-
 This project is a **hands-on lab** to demo how to **back up a cloud native application**.
 For this lab we will add and test a [backup tool](https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html) to the inventory database of the [BlueCompute](https://github.com/ibm-cloud-architecture/refarch-cloudnative-kubernetes) reference application.
+
+### Why is backup important for Cloud Native applications?
+Well, you might be wondering if you really need a backup, if your application is truly [cloud native](https://12factor.net). Although your application can be highly available and supports disaster recovery, backup can still be needed:
+* to **mitigate data corruption risks**: either through a code bug, malicious user action or an external failure, your data might get corrupted. In this case, it doesn't matter that the data is being replicated to another availability zone, as the corruption will be propagated to the other zones.
+* for **compliance regulations**: for compliance reasons, you might need to archive your data and keep it for a long time. For Cloud Native Application, this requirement can be even more accentuated, as the data might be spread through multiple databases (in different database engines), instead of a single one, as it's the case in many monolithic applications.
+
+### Hands-on lab architecture
+For this hands-on lab, we will use the following architecture.
+![Graph](images/graph.png)
+
+This is of course a very limited backup solution:
+* We backup and restore the MySQL work directory
+  * this process is not sufficient if you need to ensure strong database consistency
+  * to restore the database, you need to stop the database which may not be acceptable depending of the application
+In a true production environment, it is very important to understand the business and technical requirements for high-availability to design the right architecture. There is no "one-size fits all" solution!
 
 ### Pre-requisites
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), a version control system tool
@@ -22,8 +36,6 @@ The main steps of this lab are:
 4. simulate a problem with MySQL data
 5. restore the MySQL data from Cloud Object Storage
 6. verify that the database data is correctly restored
-
-![Graph](images/graph.png)
 
 ## 1 - Deploy the BlueCompute application
 Follow the instructions on this project to deploy BlueCompute in the **US South** region: 
