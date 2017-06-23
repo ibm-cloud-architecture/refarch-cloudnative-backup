@@ -309,7 +309,7 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   cd refarch-cloudnative-backup/chart
   ```
 
-* Install the chart
+* Install the chart using Helm
   * It will start a job that restores the backup from object storage
 
   ```bash
