@@ -143,10 +143,9 @@ kubectl get po | grep inventory-mysql
 
   You should see the following result:
 
-```
-eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po | grep inventory-mysql
-default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0          5m
-```
+  ```
+  default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0          5m
+  ```
 
 * Check the logs of the backup container to ensure that the backup has completed
 
