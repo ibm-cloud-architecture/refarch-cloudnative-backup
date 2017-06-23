@@ -441,20 +441,20 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
 
 * After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
 
-```bash
+  ```bash
   # kubectl get po
-NAME                                                     READY     STATUS        RESTARTS   AGE
-bluecompute-auth-3257476579-58h5t                        1/1       Running       0          3h
-bluecompute-customer-3427541376-9ljcv                    1/1       Running       0          3h
-bluecompute-customer-couchdb-288703141-k07dx             1/1       Running       0          3h
-bluecompute-web-deployment-1666637335-1481t              1/1       Running       0          3h
-catalog-ce-1834124410-l7m6b                              1/1       Running       0          3h
-catalog-elasticsearch-hcbrn                              1/1       Running       0          31s
-catalog-elasticsearch-j25vq                              1/1       Terminating   0          3h
-default-inventory-mysql-ibmcase-mysql-4154021736-zzs88   2/2       Running       0          24m
-inventory-ce-1218757904-rvlsm                            1/1       Running       0          31s
-nginx                                                    1/1       Running       0          1d
-```
+  NAME                                                     READY     STATUS        RESTARTS   AGE
+  bluecompute-auth-3257476579-58h5t                        1/1       Running       0          3h
+  bluecompute-customer-3427541376-9ljcv                    1/1       Running       0          3h
+  bluecompute-customer-couchdb-288703141-k07dx             1/1       Running       0          3h
+  bluecompute-web-deployment-1666637335-1481t              1/1       Running       0          3h
+  catalog-ce-1834124410-l7m6b                              1/1       Running       0          3h
+  catalog-elasticsearch-hcbrn                              1/1       Running       0          31s
+  catalog-elasticsearch-j25vq                              1/1       Terminating   0          3h
+  default-inventory-mysql-ibmcase-mysql-4154021736-zzs88   2/2       Running       0          24m
+  inventory-ce-1218757904-rvlsm                            1/1       Running       0          31s
+  nginx                                                    1/1       Running       0          1d
+  ```
 
 ## 6 - Verify that the database data is correctly restored
 
