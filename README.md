@@ -315,10 +315,11 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
 * Clone this Refarch Cloudnative Backup repository, if you haven't done so yet.
 
   ```bash
+  cd ../../..
   git clone https://github.com/ibm-cloud-architecture/refarch-cloudnative-backup.git
   ```
   
-  Switch to the `chart` directory:
+* Switch to the `chart` directory:
   
   ```bash
   cd refarch-cloudnative-backup/chart
@@ -342,11 +343,11 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   helm install \
   --set hostPath=/var/lib/mysql-<name of inventory MySQL release> \
   --set objectStorage.backupName=<name of backup> \
-  --set objectStorage.secretName=binding-<service-name>
+  --set objectStorage.secretName=binding-<service-name> \
   ibmcase-restore
   ```
 
-* A job will be created
+  A job will be created
   
   ```bash
   # kubectl get jobs 
@@ -354,18 +355,10 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   quoting-sparrow-ibmcase-restore-volume-jfilf   1         0            1m
   ```
   
-* Get the pod associated with this job
+* Look at the logs associated with this job
   
   ```bash
-  # kubectl get pods -l job-name=quoting-sparrow-ibmcase-restore-volume-jfilf -a
-  NAME                                                 READY     STATUS      RESTARTS   AGE
-  quoting-sparrow-ibmcase-restore-volume-jfilf-g9280   1/1       Running     0          7m
-  ```
-
-* Look at the logs associated with the job
-  
-  ```bash
-  # kubectl logs quoting-sparrow-ibmcase-restore-volume-jfilf-g9280
+  kubectl logs $(kubectl get pods -l job-name=$(kubectl get jobs | grep restore | awk '{print $1;}') -a | grep restore | awk '{print $1;}')
   ```
   
 * You should an output similar to this
