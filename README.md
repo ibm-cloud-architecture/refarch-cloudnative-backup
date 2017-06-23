@@ -57,7 +57,7 @@ When the deployment is finished, you should be able to access BlueCompute web pa
 
 Follow these steps to create a Cloud Object Storage account:
 
-* Log on to Bluemix by going to [Bluemix](https://bluemix.net)
+* Log on to Bluemix by going to [Bluemix web site](https://bluemix.net)
 * If you are not using US region, switch to "US South" in the top menu
 * In the upper left side, click the Menu area
 
@@ -113,38 +113,42 @@ kubectl get secrets
 
 ## Enable the backup on the MySQL container
 
-Find the name of the chart (Help package manager template) used for the MySQL instance for Inventory Microservice:
+* Find the name of the chart (Help package manager template) used for the MySQL instance for Inventory Microservice
 
 ```bash
 helm list -q 'inventory-mysql'
 ```
 
-Enable backup on this chart using the source chart stored in the [refarch-cloudnative-resiliency](https://github.com/ibm-cloud-architecture/refarch-cloudnative-resiliency/tree/kube-int) repository:
+* Clone the git [refarch-cloudnative-resiliency](https://github.com/ibm-cloud-architecture/refarch-cloudnative-resiliency/tree/kube-int) repository and switch to the kube-int branch
 
 ```bash
 git clone https://github.com/ibm-cloud-architecture/refarch-cloudnative-resiliency.git
 cd refarch-cloudnative-resiliency
 git checkout kube-int
+```
+
+* Go to "mysql/chart" subdirectory
+  * A chart is a collection of files that describe a related set of Kubernetes resources
+  * Chart files are used by Helm package manager to automate deployment
+
+```bash
 cd mysql/chart
 ```
 
-Use the following command to enable the backup
-
-* `<name of backup>` refers the container on the Object Storage service it will use to upload the data to
-* `binding-<service-name>` is the name of the secrets (using the output of `kubectl get secrets` above)
-* `<name of inventory release>` is the name of the release (as returned by `helm list -q 'inventory-mysql'`
+* Use the following command to add a backup container that performs the daily incremental backup against the `/var/lib/mysql` directory where all of the MySQL data is stored
+  * `<name of backup>` refers the container on the Object Storage service it will use to upload the data to
+  * `binding-<service-name>` is the name of the secrets (using the output of `kubectl get secrets` above)
+  * `<name of inventory release>` is the name of the release (as returned by `helm list -q inventory-mysql`
 
 ```
 helm upgrade \
   --reuse-values \
   --set mysql.backup.enabled=true \
   --set mysql.backup.backupName=<name of backup> \
-  --set mysql.backup.objStoreSecretName=binding-<service-name>
+  --set mysql.backup.objStoreSecretName=binding-<service-name> \
   <name of inventory release> \
   ibmcase-mysql
 ```
-
-This command adds a backup container that performs the daily incremental backup against the `/var/lib/mysql` directory where all of the MySQL data is stored.
 
 * You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
 
@@ -152,7 +156,7 @@ This command adds a backup container that performs the daily incremental backup 
 kubectl get po | grep inventory-mysql
 ```
 
-* You will see the following result:
+* You should see the following result:
 
 ```bash
 eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po | grep inventory-mysql
@@ -165,10 +169,10 @@ default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0  
 kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inventory-backup-container
 ```
 
-* The backup completes when you see output similar to the following:
+* The backup has completed successfully if you see an output similar to the following:
 
 ```
-[2017-06-22 16:58:52,227] [backup : 102] [INFO] Backup done SUCCESSFULLY!!!!
+[2017-06-23 13:54:27,570] [backup : 117] [INFO] Full backup completed
 ```
 
 ## Simulate a failure
@@ -234,19 +238,19 @@ Run the following steps to simulate a database corruption:
   delete from items where id != 13401;
   ```
 
-  You should see the following result:
+* You should see the following result:
 
   ```mysql
   Query OK, 11 rows affected (0.04 sec)
   ```
 
-  Exit the MySQL prompt by typing
+* Exit the MySQL prompt by typing
 
   ```mysql
   quit
   ```
 
-  Then exit the container shell
+* Then exit the container shell
 
   ```bash
   exit
@@ -349,7 +353,7 @@ Follow these instructions to restore the backup.
   quoting-sparrow-ibmcase-restore-volume-jfilf   1         0            1m
   ```
   
-* Get the pod associated with this job:
+* Get the pod associated with this job
   
   ```bash
   # kubectl get pods -l job-name=quoting-sparrow-ibmcase-restore-volume-jfilf -a
@@ -357,13 +361,13 @@ Follow these instructions to restore the backup.
   quoting-sparrow-ibmcase-restore-volume-jfilf-g9280   1/1       Running     0          7m
   ```
 
-* Look at the logs associated with the job:
+* Look at the logs associated with the job
   
   ```bash
   # kubectl logs quoting-sparrow-ibmcase-restore-volume-jfilf-g9280
   ```
   
-* You will see similar to the following output:
+* You should an output similar to this
   
   ```
   [2017-06-22 17:22:56,036] [utilities : 151] [INFO] *****************Start logging to ./Restore.log
