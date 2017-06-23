@@ -17,11 +17,9 @@ For this hands-on lab, we will use the following architecture:
 
 ![Graph](images/graph.png)
 
-This is of course a simplified backup solution:
-* We backup and restore the MySQL work directory
-  * this process is not sufficient if you need to ensure strong database consistency
+This is a simple backup solution, as we backup and restore the MySQL work directory
+  * this process may not be acceptable, if you need to ensure strong database consistency
   * to restore the database, you need to stop the database which may not be acceptable depending of the application criticity
-* Persistance Volume is not supported in the Bluemix free cluster. The application configuration is tailored the the Bluemix free cluster, but would need to be changed for a multi-node environment. 
 
 In a true production environment, it is very important to understand the business and technical requirements for high-availability to design the right architecture. There is no "one-size fits all" solution!
 
