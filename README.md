@@ -79,8 +79,8 @@ Follow these steps to create a Cloud Object Storage account:
 
 ### Bind the Object Storage credentials to the Kubernetes cluster
 
-* In the terminal, find the name of the Object Storage service
-  * If you get an empty response for this command, check that you are connected to the right [region](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_api), [organisation and space](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login).
+* In the terminal, check that your Object Storage service has been correctly created
+  * If you get an empty response for this command, check that you are connected to the right [region](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_api), [organisation and space](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_login)
 
 ```bash
 bx cf services | grep Object-Storage
@@ -88,24 +88,18 @@ bx cf services | grep Object-Storage
 
 * Get the name of your Kubernetes cluster
 ```bash
-bx cs clusters
+export CLUSTER_NAME=`bx cs clusters | grep normal | awk '{print $1;}'`
 ```
 
 * Bind this Object Storage service to your Kubernetes cluster
   * Replace <cluster-name> by the name of your cluster
 
 ```bash
-bx cs cluster-service-bind <cluster-name> default bluecompute-storage
+bx cs cluster-service-bind $CLUSTER_NAME default bluecompute-storage
 ```
 
 
 ## 3 - Do a backup of the inventory database to Cloud Object Storage 
-
-* Find the name of the chart (Help package manager template) used for the MySQL instance for Inventory Microservice
-
-```bash
-helm list -q 'inventory-mysql'
-```
 
 * Clone the git [refarch-cloudnative-resiliency](https://github.com/ibm-cloud-architecture/refarch-cloudnative-resiliency/tree/kube-int) repository and switch to the kube-int branch
 
@@ -135,7 +129,7 @@ helm upgrade \
   ibmcase-mysql
 ```
 
-* You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
+  You can validate that the backup container has been created by checking the number of containers in the inventory-mysql POD:
 
 ```bash
 kubectl get po | grep inventory-mysql
@@ -289,21 +283,27 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   kubectl scale --replicas=0 deploy/default-inventory-mysql-ibmcase-mysql
   ```
   
-  Ensure that the MySQL container has stopped:
+  Ensure that the MySQL container has stopped
   
   ```bash
   kubectl get deployments | grep default-inventory-mysql
+  ```
+
+  You should get a similar output
+  
+  ```
   default-inventory-mysql-ibmcase-mysql      0         0         0            0           1h
   ```
 
-* Clone this Refarch Cloudnative Backup repository, if you haven't done so yet.
+
+* Clone this GitHub repository, if you haven't done so yet
 
   ```bash
   cd ../../..
   git clone https://github.com/ibm-cloud-architecture/refarch-cloudnative-backup.git
   ```
   
-* Switch to the `chart` directory:
+* Switch to the `chart` directory
   
   ```bash
   cd refarch-cloudnative-backup/chart
@@ -320,10 +320,14 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   ibmcase-restore
   ```
 
-  A job will be created
+  Check that the job has be created
   
   ```bash
-  # kubectl get jobs 
+  kubectl get jobs
+  ```
+  
+  You should get a similar output
+  ```
   NAME                                           DESIRED   SUCCESSFUL   AGE
   quoting-sparrow-ibmcase-restore-volume-jfilf   1         0            1m
   ```
