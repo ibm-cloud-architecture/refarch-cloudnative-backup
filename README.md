@@ -156,9 +156,9 @@ helm upgrade \
 kubectl get po | grep inventory-mysql
 ```
 
-* You should see the following result:
+  You should see the following result:
 
-```bash
+```
 eduardos-mbp:refarch-cloudnative-kubernetes edu$ kubectl get po | grep inventory-mysql
 default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0          5m
 ```
@@ -169,7 +169,7 @@ default-inventory-mysql-ibmcase-mysql-4154021736-qh5l7   2/2       Running   0  
 kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inventory-backup-container
 ```
 
-* The backup has completed successfully if you see an output similar to the following:
+  The backup has completed successfully if you see an output similar to the following:
 
 ```
 [2017-06-23 13:54:27,570] [backup : 117] [INFO] Full backup completed
@@ -193,7 +193,8 @@ Run the following steps to simulate a database corruption:
   kubectl exec -it $MYSQL_ID -- /bin/bash
   ```
 
-  You should see your MySQL container prompt:
+* You should see your MySQL container prompt:
+  * Your commands are now running inside the container
   ```
   root@inventory-mysql-1346511112-235wj:/#
   ```
@@ -201,7 +202,7 @@ Run the following steps to simulate a database corruption:
 * Type the following command:
 
   ```bash
-  mysql --u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb
+  mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb
   ```
 
 * In the MySQL prompt, type the following command to list the item IDs:
@@ -210,7 +211,7 @@ Run the following steps to simulate a database corruption:
   select id from items;
   ```
 
-  You will see the following result:
+  You should see the following result:
 
   ```mysql
   +-------+
@@ -260,20 +261,20 @@ Run the following steps to simulate a database corruption:
 
 Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
 
-* Run the following command to obtain the ElasticSearch and Inventory PODs:
+* Run the following command to obtain the ElasticSearch and Inventory PODs
 
   ```bash
   export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
   export INV_ID=`kubectl get po |grep inventory-ce|awk '{print $1}'`
   ```
 
-* Now destroy the ElasticSearch and Inventory PODs:
+* Now destroy the ElasticSearch and Inventory PODs
 
   ```bash
   kubectl delete po $ES_ID $INV_ID
   ```
 
-* After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically:
+* After a few seconds, you'll see that Kubernetes starts another ElasticSearch POD automatically
 
   ```bash
   # kubectl get po
@@ -296,7 +297,7 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
 ## Restore
 
-Follow these instructions to restore the backup. 
+To restore the backup we will stop the MySQL database, deploy a restore job to kubernetes, restart MySQL and kill the cache.
 
 * Stop the MySQL container, by reducing the number of pods to 0
 
@@ -311,7 +312,7 @@ Follow these instructions to restore the backup.
   default-inventory-mysql-ibmcase-mysql      0         0         0            0           1h
   ```
 
-* Clone this git repository, if you haven't done so yet.
+* Clone this Refarch Cloudnative Backup repository, if you haven't done so yet.
 
   ```bash
   git clone https://github.com/ibm-cloud-architecture/refarch-cloudnative-backup.git
