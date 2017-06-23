@@ -69,7 +69,8 @@ Follow these steps to create a Cloud Object Storage account:
 
 * Click *Object Storage*
 
-* Choose the storage name
+* Choose **"bluecompute-storage"** for the service name
+  * It is important to use this specifice name!
 
 ![Storage name](images/storage_name.png)
 
@@ -90,24 +91,13 @@ bx cf services | grep Object-Storage
 bx cs clusters
 ```
 
-* Bind this Object Storage service to the cluster
+* Bind this Object Storage service to your Kubernetes cluster
+  * Replace <cluster-name> by the name of your cluster
 
 ```bash
-bx cs cluster-service-bind <cluster-name> default <object-storage-name>
+bx cs cluster-service-bind <cluster-name> default bluecompute-storage
 ```
 
-  * For example, in my cluster `awesome-kube`, with my Object Storage service named `awesome-objstorage`:
-
-```bash
-bx cs cluster-service-bind awesome-kube default awesome-objstorage
-```
-
-* Find the name of the created secret for object storage
-  * The name should be similar to `binding-<service-name>`
-
-```bash
-kubectl get secrets
-```
 
 ## 3 - Do a backup of the inventory database to Cloud Object Storage 
 
@@ -134,17 +124,14 @@ cd mysql/chart
 ```
 
 * Use the following command to add a backup container that performs the daily incremental backup against the `/var/lib/mysql` directory where all of the MySQL data is stored
-  * `<name of backup>` refers the container on the Object Storage service it will use to upload the data to
-  * `binding-<service-name>` is the name of the secrets (using the output of `kubectl get secrets` above)
-  * `<name of inventory release>` is the name of the release (as returned by `helm list -q inventory-mysql`
 
 ```
 helm upgrade \
   --reuse-values \
   --set mysql.backup.enabled=true \
-  --set mysql.backup.backupName=<name of backup> \
-  --set mysql.backup.objStoreSecretName=binding-<service-name> \
-  <name of inventory release> \
+  --set mysql.backup.backupName=bluecompute-storage \
+  --set mysql.backup.objStoreSecretName=binding-bluecompute-storage \
+  $(helm list -q inventory-mysql) \
   ibmcase-mysql
 ```
 
@@ -323,25 +310,14 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   cd refarch-cloudnative-backup/chart
   ```
 
-* Install the chart, which starts a job that restores the backup from object storage. Substitute the following:
-
-  * `<name of inventory MySQL release>`: the name of the release in helm.  This can be retrieved with
-  
-    ```bash
-    helm list -q 'inventory-mysql'
-    ```
-  * `<name of backup>`: the name of the backup container.  This must match what was used to start the backup command.
-  * `<service-name>`: the name of the Object Storage service created.  This must match what was used to start the backup command.  You can usually find out the string to put here (including the `binding-` prefix) using:
-  
-    ```bash
-    kubectl get secrets
-    ```
+* Install the chart
+  * It will start a job that restores the backup from object storage
 
   ```bash
   helm install \
-  --set hostPath=/var/lib/mysql-<name of inventory MySQL release> \
-  --set objectStorage.backupName=<name of backup> \
-  --set objectStorage.secretName=binding-<service-name> \
+  --set hostPath=/var/lib/mysql-$(helm list -q inventory-mysql) \
+  --set objectStorage.backupName=bluecompute-storage \
+  --set objectStorage.secretName=binding-bluecompute-storage \
   ibmcase-restore
   ```
 
