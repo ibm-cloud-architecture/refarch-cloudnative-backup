@@ -38,7 +38,7 @@ In a true production environment, it is very important to understand the busines
 The main steps of this lab are:
 1. deploy the Bluecompute application
 2. configure Cloud Object Storage for backups
-3. do a backup of the inventory MySQL database to Cloud Object Storage 
+3. do a backup of the inventory database to Cloud Object Storage 
 4. simulate a problem with MySQL data
 5. restore the MySQL data from Cloud Object Storage
 6. verify that the database data is correctly restored
@@ -111,7 +111,7 @@ bx cs cluster-service-bind awesome-kube default awesome-objstorage
 kubectl get secrets
 ```
 
-## Enable the backup on the MySQL container
+## 3 - Do a backup of the inventory database to Cloud Object Storage 
 
 * Find the name of the chart (Help package manager template) used for the MySQL instance for Inventory Microservice
 
@@ -175,7 +175,7 @@ kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inv
 [2017-06-23 13:54:27,570] [backup : 117] [INFO] Full backup completed
 ```
 
-## Simulate a failure
+## 4 - Simulate a problem with MySQL data
 
 ### Remove database records
 
@@ -295,7 +295,7 @@ Now the database records are cached in ElasticSearch, so we need to destroy the 
 
   ![Single item](images/single_item.png)
 
-## Restore
+## 5 - Restore the MySQL data from Cloud Object Storage
 
 To restore the backup we will stop the MySQL database, deploy a restore job to kubernetes, restart MySQL and kill the cache.
 
@@ -361,7 +361,7 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   kubectl logs $(kubectl get pods -l job-name=$(kubectl get jobs | grep restore | awk '{print $1;}') -a | grep restore | awk '{print $1;}')
   ```
   
-* You should an output similar to this
+  You should an output similar to this
   
   ```
   [2017-06-22 17:22:56,036] [utilities : 151] [INFO] *****************Start logging to ./Restore.log
@@ -379,7 +379,7 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
   Last full backup date: Thu Jun 22 13:46:12 2017
   ```
   
-* When the job completes, the restore has completed
+  When the job completes, the restore has completed
   
   ```bash
   # kubectl get jobs 
@@ -416,10 +416,8 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
 * Type the following command:
 
   ```bash
-  mysql --u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb 
+  mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} inventorydb 
   ```
-
-  then type password as the password
 
 * In the MySQL prompt, type the following command to list the item IDs:
 
@@ -451,9 +449,7 @@ To restore the backup we will stop the MySQL database, deploy a restore job to k
 
 * Exit the MySQL prompt by typing `quit` then type `exit` to exit the container shell.
 
-  * Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data.
-
-* Run the following command to obtain the ElasticSearch and Inventory PODs:
+* Now the database records are cached in ElasticSearch, so we need to destroy the ElasticSearch POD in order to refresh the data. Run the following command to obtain the ElasticSearch and Inventory PODs:
 
   ```bash
   export ES_ID=`kubectl get po |grep elasticsearch|awk '{print $1}'`
@@ -483,4 +479,8 @@ inventory-ce-1218757904-rvlsm                            1/1       Running      
 nginx                                                    1/1       Running       0          1d
 ```
 
+## 6 - Verify that the database data is correctly restored
+
 * Wait a few minutes and refresh the BlueCompute Web UI page. You'll see all the items are back!
+
+![Catalog](images/catalog.png)
