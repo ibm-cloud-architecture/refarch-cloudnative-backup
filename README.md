@@ -153,6 +153,10 @@ kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inv
 [2017-06-23 13:54:27,570] [backup : 117] [INFO] Full backup completed
 ```
 
+If you look now at the Cloud Object Storage, you'll see a few Object Containers created:
+
+![Storage screenshot(images/storage_screenshot.png)
+
 ## 4 - Simulate a problem with MySQL data
 
 ### Remove database records
