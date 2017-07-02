@@ -155,7 +155,7 @@ kubectl logs $(kubectl get po | grep inventory-mysql | awk '{print $1;}') -c inv
 
 If you look now at the Cloud Object Storage, you'll see a few Object Containers created:
 
-![Storage screenshot(images/storage_screenshot.png)
+![Storage screenshot](images/storage_screenshot.png)
 
 ## 4 - Simulate a problem with MySQL data
 
